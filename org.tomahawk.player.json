@@ -1,0 +1,227 @@
+{
+    "app-id": "org.tomahawk.player",
+    "branch": "master",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "master",
+    "sdk": "org.kde.Sdk",
+    "tags": ["nightly"],
+    "rename-desktop-file": "tomahawk.desktop",
+    "desktop-file-name-prefix": "(Nightly) ",
+    "finish-args": [
+        /* X11 + XShm access */
+        "--share=ipc", "--socket=x11",
+        /* Wayland access */
+        "--socket=wayland",
+        /* We want full fs access so we can read the files */
+        "--filesystem=home:rw",
+        /* Needs to talk to the network: */
+        "--share=network"
+    ],
+    "build-options" : {
+        "cflags": "-O2 -g",
+        "cxxflags": "-O2 -g",
+        "env": {
+            "V": "1"
+        }
+    },
+    "cleanup": ["/include", "/lib/pkgconfig",
+                "/share/pkgconfig", "/share/aclocal",
+                "/man", "/share/man", "/share/gtk-doc",
+                "*.la", "*.a"],
+    "modules": [
+      {
+        "name": "boost",
+        "config-opts": [],
+        "cleanup": [ "/lib/libboost_*.a" ],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "https://downloads.sourceforge.net/project/boost/boost/1.60.0/boost_1_60_0.tar.bz2",
+                "sha256": "686affff989ac2488f79a97b9479efb9f2abae035b5ed4d8226de6857933fd3b"
+            },
+            {
+                "type": "file",
+                "path": "boost-configure",
+                "dest-filename": "configure"
+            }
+        ]
+      },
+      {
+        "name": "taglib",
+        "cmake": true,
+        "config-opts": ["-DBUILD_SHARED_LIBS=ON"],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "https://taglib.github.io/releases/taglib-1.11.tar.gz",
+                "sha256": "ed4cabb3d970ff9a30b2620071c2b054c4347f44fc63546dbe06f97980ece288"
+            }
+        ]
+      },
+      {
+        "name": "sparsehash",
+        "config-opts": [],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "https://github.com/sparsehash/sparsehash/archive/sparsehash-2.0.3.tar.gz",
+                "sha256": "05e986a5c7327796dad742182b2d10805a8d4f511ad090da0490f146c1ff7a8c"
+            }
+        ]
+      },
+      {
+        "name": "qt-qca",
+        "cmake": true,
+        "sources": [
+            {
+                "type": "archive",
+                "url": "http://download.kde.org/stable/qca/2.1.1/src/qca-2.1.1.tar.xz",
+                "sha256": "95de3e7910b5f9ec7084169989c9d98bfb527e6a4865fe17269c3b24308be983"
+            }
+        ]
+      },
+      {
+        "name": "quazip",
+        "cmake": true,
+        "config-opts": ["-DBUILD_WITH_QT4:BOOL=OFF"],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "http://downloads.sourceforge.net/quazip/quazip-0.7.2.tar.gz",
+                "sha256": "91d827fbcafd099ae814cc18a8dd3bb709da6b8a27c918ee1c6c03b3f29440f4"
+            },
+            {
+                "type": "patch",
+                "path": "quazip-0.7.2-fix_static.patch"
+            },
+            {
+                "type": "patch",
+                "path": "quazip-cmake-install.patch"
+            }
+        ]
+      },
+      {
+        "name": "luceneplusplus",
+        "cmake": true,
+        "config-opts": ["-DCMAKE_BUILD_TYPE:String='release'", "-DENABLE_DEMO:BOOL=OFF", "-DCMAKE_INSTALL_LIBDIR=lib"],
+        "make-args": ["lucene++", "lucene++-contrib"],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "https://github.com/luceneplusplus/LucenePlusPlus/archive/rel_3.0.7.tar.gz",
+                "sha256": "6c19f203311e4b44a0ccf7b1127db77436eb47159ea1c54f7531a0b1ca585e0c"
+            },
+            {
+                "type": "patch",
+                "path": "lucene-boost-1.58-variant.patch"
+            },
+            {
+                "type": "patch",
+                "path": "lucene-Fix-packageconfig-path.patch"
+            }
+        ]
+      },
+      {
+        "name": "qtkeychain",
+        "cmake": true,
+        "config-opts": ["-DBUILD_TRANSLATIONS:BOOL=OFF","-DCMAKE_INSTALL_LIBDIR=lib"],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "https://github.com/frankosterfeld/qtkeychain/archive/v0.7.0.tar.gz",
+                "sha256": "9f9afaae8e909391d7fc932bac95e38befaac5b2eb49f6623a8efec60a2e6a3a"
+            },
+            {
+                "type": "patch",
+                "path": "qtkeychain_translations.patch"
+            }
+        ]
+      },
+      {
+        "name": "libmad",
+        "config-opts": ["--disable-static"],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "http://downloads.sourceforge.net/project/mad/libmad/0.15.1b/libmad-0.15.1b.tar.gz",
+                "sha256": "bbfac3ed6bfbc2823d3775ebb931087371e142bb0e9bb1bee51a76a6e0078690"
+            },
+            {
+                "type": "patch",
+                "path": "libmad-force-mem.patch"
+            }
+        ]
+      },
+      {
+        "name": "vlc",
+        "config-opts": ["--disable-lua", "--disable-avcodec",
+                        "--disable-swscale", "--disable-a52", "--disable-libgcrypt"],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "http://get.videolan.org/vlc/2.2.4/vlc-2.2.4.tar.xz",
+                "sha256": "1632e91d2a0087e0ef4c3fb4c95c3c2890f7715a9d1d43ffd46329f428cf53be"
+            },
+            {
+                "type": "patch",
+                "path": "vlc-cache-gen.patch"
+            }
+        ]
+      },
+      {
+        "name": "libechonest",
+        "cmake": true,
+        "config-opts": ["-DBUILD_WITH_QT4:BOOL=OFF", "-DECHONEST_BUILD_TESTS:BOOL=OFF"],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "http://files.lfranchi.com/libechonest-2.3.0.tar.bz2",
+                "sha256": "79983ba72fbf9b112ebfb329b96b60eddf25d719ebe34eb70de01aa106ae2b44"
+            },
+            {
+                "type": "patch",
+                "path": "libechonest-include.patch"
+            }
+        ]
+      },
+      {
+        "name": "websocketpp",
+        "cmake": true,
+        "config-opts": [],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "https://github.com/zaphoyd/websocketpp/archive/0.7.0.tar.gz",
+                "sha256": "07b3364ad30cda022d91759d4b83ff902e1ebadb796969e58b59caa535a03923"
+            }
+        ]
+      },
+      {
+        "name": "liblastfm",
+        "cmake": true,
+        "config-opts": ["-DBUILD_FINGERPRINT:BOOL=OFF", "-DCMAKE_INSTALL_LIBDIR=lib"],
+        "sources": [
+            {
+                "type": "archive",
+                "url": "https://github.com/lastfm/liblastfm/archive/1.0.9.tar.gz",
+                "sha256": "5276b5fe00932479ce6fe370ba3213f3ab842d70a7d55e4bead6e26738425f7b"
+            },
+            {
+                "type": "patch",
+                "path": "liblastfm-include.patch"
+            }
+        ]
+      },
+      {
+        "name": "tomahawk",
+        "cmake": true,
+        "config-opts": ["-DBUILD_WITH_QT4:BOOL=OFF", "-DCMAKE_INSTALL_LIBDIR=lib"],
+        "sources": [
+            {
+                "type": "git",
+                "url": "https://github.com/tomahawk-player/tomahawk.git"
+            }
+        ]
+      }
+    ]
+}

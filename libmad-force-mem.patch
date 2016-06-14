@@ -1,0 +1,10 @@
+--- libmad/configure.ac_old	2016-06-15 12:21:50.619835681 +0200
++++ libmad/configure.ac	2016-06-15 12:22:04.176804275 +0200
+@@ -140,7 +140,6 @@
+     case "$optimize" in
+ 	-O|"-O "*)
+ 	    optimize="-O"
+-	    optimize="$optimize -fforce-mem"
+ 	    optimize="$optimize -fforce-addr"
+ 	    : #x optimize="$optimize -finline-functions"
+ 	    : #- optimize="$optimize -fstrength-reduce"

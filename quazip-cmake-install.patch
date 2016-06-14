@@ -1,0 +1,8 @@
+--- quazip/CMakeLists.txt_old	2016-06-15 01:16:56.688761425 +0200
++++ quazip/CMakeLists.txt	2016-06-15 01:17:29.489839408 +0200
+@@ -54,4 +54,4 @@ set(QUAZIP_LIB_TARGET_NAME quazip${QUAZI
+
+ add_subdirectory(quazip)
+
+-install(FILES FindQuaZip.cmake RENAME FindQuaZip${QUAZIP_LIB_VERSION_SUFFIX}.cmake DESTINATION ${CMAKE_ROOT}/Modules)
++install(FILES FindQuaZip.cmake RENAME FindQuaZip${QUAZIP_LIB_VERSION_SUFFIX}.cmake DESTINATION ${LIB_INSTALL_DIR}/cmake/${QUAZIP_LIB_TARGET_NAME})

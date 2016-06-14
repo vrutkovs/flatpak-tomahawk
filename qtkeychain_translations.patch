@@ -1,0 +1,31 @@
+--- qtkeychain/CMakeLists.txt_old	2016-06-15 02:24:30.839242023 +0200
++++ qtkeychain/CMakeLists.txt	2016-06-15 02:24:55.804286921 +0200
+@@ -118,11 +118,6 @@
+
+ QT_WRAP_CPP(qtkeychain_MOC_OUTFILES keychain.h keychain_p.h)
+
+-set(qtkeychain_TR_FILES
+-      translations/qtkeychain_de.ts
+-      translations/qtkeychain_ro.ts
+-)
+-
+ file(GLOB qtkeychain_TR_SOURCES *.cpp *.h *.ui)
+ qt_create_translation(qtkeychain_MESSAGES ${qtkeychain_TR_SOURCES} ${qtkeychain_TR_FILES})
+ qt_add_translation(qtkeychain_QM_FILES ${qtkeychain_TR_FILES})
+@@ -130,6 +125,11 @@
+ add_custom_target(translations DEPENDS ${qtkeychain_QM_FILES})
+
+ if(NOT QT_TRANSLATIONS_DIR)
++    set(qtkeychain_TR_FILES
++          translations/qtkeychain_de.ts
++          translations/qtkeychain_ro.ts
++    )
++
+     # If this directory is missing, we are in a Qt5 environment.
+     # Extract the qmake executable location
+     get_target_property(QT5_QMAKE_EXECUTABLE Qt5::qmake IMPORTED_LOCATION)
+@@ -196,4 +196,3 @@
+               ${CMAKE_CURRENT_BINARY_DIR}/Qt${QTKEYCHAIN_VERSION_INFIX}KeychainConfigVersion.cmake
+         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Qt${QTKEYCHAIN_VERSION_INFIX}Keychain
+ )
+-

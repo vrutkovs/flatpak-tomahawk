@@ -1,0 +1,11 @@
+--- LucenePlusPlus-rel_3.0.7/include/VariantUtils.h~	2015-08-05 17:03:05.196684008 +0100
++++ LucenePlusPlus-rel_3.0.7/include/VariantUtils.h	2015-08-05 17:03:08.230687346 +0100
+@@ -22,7 +22,7 @@
+ 
+     template <typename TYPE, typename VAR>
+     static TYPE get(VAR var) {
+-        return var.type() == typeid(TYPE) ? boost::get<TYPE>(var) : TYPE();
++        return var.type() == typeid(TYPE) ? boost::relaxed_get<TYPE>(var) : TYPE();
+     }
+ 
+     template <typename TYPE, typename VAR>

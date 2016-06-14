@@ -1,0 +1,18 @@
+--- vlc/Makefile.in_old	2016-06-15 12:37:51.943593186 +0200
++++ vlc/Makefile.in	2016-06-15 12:38:30.726502643 +0200
+@@ -2902,14 +2902,7 @@
+ # Installing plugins cache
+ ###############################################################################
+ install-exec-hook:
+-	if test "$(build)" = "$(host)"; then \
+-		PATH="$(DESTDIR)$(bindir):$$PATH" \
+-		LD_LIBRARY_PATH="$(DESTDIR)$(libdir):$$LD_LIBRARY_PATH" \
+-		"$(DESTDIR)$(vlclibdir)/vlc-cache-gen$(EXEEXT)" \
+-			 "$(DESTDIR)$(vlclibdir)/plugins" ; \
+-	else \
+-		echo "Cross-compilation: cache generation skipped!" ; \
+-	fi
++	echo "nope"
+
+ uninstall-hook:
+ 	rm -f -- "$(DESTDIR)$(vlclibdir)/plugins/plugins.dat"
