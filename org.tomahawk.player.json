@@ -22,7 +22,8 @@
         "cxxflags": "-O2 -g",
         "env": {
             "V": "1"
-        }
+        },
+        "no-debuginfo": true
     },
     "cleanup": ["/include", "/lib/pkgconfig",
                 "/share/pkgconfig", "/share/aclocal",
@@ -215,7 +216,7 @@
       {
         "name": "tomahawk",
         "cmake": true,
-        "config-opts": ["-DBUILD_WITH_QT4:BOOL=OFF", "-DCMAKE_INSTALL_LIBDIR=lib"],
+        "config-opts": ["-DBUILD_WITH_QT4:BOOL=OFF", "-DCMAKE_INSTALL_LIBDIR=lib", "-DCMAKE_BUILD_TYPE:String='debug'"],
         "sources": [
             {
                 "type": "git",
